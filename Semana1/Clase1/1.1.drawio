@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net" modified="2024-01-24T01:52:14.502Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="ZK-YPbw7Z1yZECwL_AeJ" version="23.0.0" type="device">
+  <diagram name="Página-1" id="kw8rL7kmtbwByYJQHh1H">
+    <mxGraphModel dx="594" dy="1586" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="B9Am3vsr65_h_xUE_bE_-1" value="Que es lo que tenmos que hacer?&lt;br&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="250" y="120" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="B9Am3vsr65_h_xUE_bE_-2" value="" style="edgeStyle=isometricEdgeStyle;endArrow=none;html=1;elbow=vertical;rounded=0;fillColor=#6a00ff;strokeColor=#3700CC;" edge="1" parent="1">
+          <mxGeometry width="50" height="100" relative="1" as="geometry">
+            <mxPoint x="173.25" y="450" as="sourcePoint" />
+            <mxPoint x="273.25" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="B9Am3vsr65_h_xUE_bE_-4" value="suma de dos o mas numeros.&lt;br&gt;" style="shape=ext;double=1;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="170" y="430" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="B9Am3vsr65_h_xUE_bE_-5" value="" style="edgeStyle=isometricEdgeStyle;endArrow=none;html=1;rounded=0;exitX=0.038;exitY=0.613;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="B9Am3vsr65_h_xUE_bE_-4" target="B9Am3vsr65_h_xUE_bE_-6">
+          <mxGeometry width="50" height="100" relative="1" as="geometry">
+            <mxPoint x="90" y="600" as="sourcePoint" />
+            <mxPoint x="164.2" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="B9Am3vsr65_h_xUE_bE_-6" value="los numeros se pueden sumar?" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="10.000000000000043" y="570" width="80" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

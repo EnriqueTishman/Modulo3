@@ -1,0 +1,15 @@
+
+*{
+    background-color: black;
+}
+
+.container-fluid{
+    background-color: rgba(187, 255, 0, 0.791);
+    height: 60px;
+}
+.navbar-brand{ 
+    background-color: transparent;
+}
+.nav-item{
+    background-color: transparent;
+}
