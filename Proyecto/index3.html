@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Alumnos</title>
+    <link rel="stylesheet" href="./style3.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lista de Alumnos</h1>
+
+        <div class="cuadros">
+            <h2>Alta de Alumnos</h2>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre">
+
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos">
+
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad">
+
+            <button onclick="agregarAlumno()">Agregar Alumno</button>
+        </div>
+
+        <div class="cuadros">
+            <h2>Asignar Materia y Calificación</h2>
+            <label for="materia">Materia:</label>
+            <input type="text" id="materia">
+
+            <label for="calificacion">Calificación:</label>
+            <input type="number" id="calificacion">
+
+            <button onclick="agregarMateriaCalificacion()">Agregar Materia y Calificación</button>
+        </div>
+
+        <div class="cuadros">
+            <h2>Asignar Grupo</h2>
+            <label for="grupo">Grupo:</label>
+            <input type="text" id="grupo">
+
+            <button onclick="agregarGrupo()">Asignar Grupo</button>
+        </div>
+
+        <ul id="alumno-list"></ul>
+    </div>
+
+    <script src="./script3.js"></script>
+</body>
+</html>
