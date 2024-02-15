@@ -57,3 +57,11 @@ li {
 li:last-child {
     border-bottom: none;
 }
+
+    .boton-dar-de-baja {
+        background-color: red; 
+        color: white; 
+        float: right; 
+        margin-right: 10px; 
+    }
+
