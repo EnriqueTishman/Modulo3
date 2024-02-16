@@ -1,7 +1,7 @@
 function Alumno(nombre, apellidos, fechaNacimiento) {
     this.nombre = nombre;
     this.apellidos = apellidos;
-    this.fechaNacimiento = fechaNacimiento;  // Nuevo campo para la fecha de cumpleaños
+    this.fechaNacimiento = fechaNacimiento;  
     this.materias = [];
     this.calificaciones = {};
     this.grupo = "";
@@ -13,7 +13,7 @@ let alumnos = JSON.parse(localStorage.getItem('alumnos')) || [];
 function agregarAlumno() {
     let nombre = document.getElementById('nombre').value;
     let apellidos = document.getElementById('apellidos').value;
-  //  let fechaNacimiento = prompt("Ingrese la fecha de cumpleaños del alumno (formato: YYYY-MM-DD):");
+  
     let fechaNacimiento =document.getElementById('fechaNacimiento').value;
     if (!nombre || !apellidos || !fechaNacimiento) {
         alert("Por favor, complete todos los campos.");
@@ -38,14 +38,14 @@ function agregarMateriaCalificacion() {
         return;
     }
 
-    // Buscar el último alumno válido en el array alumnos
+    
     let indiceUltimoAlumno = alumnos.length - 1;
     while (indiceUltimoAlumno >= 0 && (!alumnos[indiceUltimoAlumno].nombre || !alumnos[indiceUltimoAlumno].apellidos)) {
         indiceUltimoAlumno--;
     }
 
     if (indiceUltimoAlumno >= 0) {
-        // Verificar si el alumno ya tiene la materia asignada
+        
         if (!alumnos[indiceUltimoAlumno].materias.includes(materia)) {
             alumnos[indiceUltimoAlumno].materias.push(materia);
             alumnos[indiceUltimoAlumno].calificaciones[materia] = calificacion;
@@ -303,7 +303,7 @@ function filtrarAlumnos() {
 function calcularPromedioPorGrupo() {
     let grupos = {};
 
-    // Organizar a los alumnos por grupos
+   
     for (let alumno of alumnos) {
         if (alumno.grupo) {
             if (!grupos[alumno.grupo]) {
@@ -313,7 +313,7 @@ function calcularPromedioPorGrupo() {
         }
     }
 
-    // Calcular el promedio por cada grupo
+  
     let promedioGruposHTML = '<ul>';
     for (let grupo in grupos) {
         let promedioGrupo = calcularPromedioGrupo(grupos[grupo]);
