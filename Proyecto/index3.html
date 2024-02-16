@@ -22,36 +22,21 @@
 <div class="container">
     <h1>Lista de Alumnos</h1>
 
-    <div class="cuadros">
-        <h2>Alta de Alumnos</h2>
+    <form id="formulario-alta">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre">
-
+        <input type="text" id="nombre" required>
+        <br>
         <label for="apellidos">Apellidos:</label>
-        <input type="text" id="apellidos">
-
-        <button onclick="agregarAlumno()">Agregar Alumno</button>
-    </div>
-
-    <div class="cuadros">
-        <h2>Asignar Materia y Calificación</h2>
-        <label for="materia">Materia:</label>
-        <select id="materia">
-            <option value="Matemáticas">Matemáticas</option>
-            <option value="Ciencias">Ciencias</option>
-            <option value="Historia">Historia</option>
-            <option value="Literatura">Literatura</option>
-            <option value="Idiomas">Idiomas</option>
-            <option value="Arte">Arte</option>
-            <option value="Educación Física">Educación Física</option>
-            <option value="Informática">Informática</option>
-        </select>
-
-        <label for="calificacion">Calificación:</label>
-        <input type="number" id="calificacion">
-
-        <button onclick="agregarMateriaCalificacion()">Agregar Materia y Calificación</button>
-    </div>
+        <input type="text" id="apellidos" required>
+        <br>
+        <!-- Nueva entrada para la fecha de cumpleaños -->
+        <label for="fechaNacimiento">Fecha de Cumpleaños (YYYY-MM-DD):</label>
+        <input type="text" id="fechaNacimiento" required>
+        <br>
+        <button type="button" onclick="agregarAlumno()">Agregar Alumno</button>
+    </form>
+    <br>
+    <button onclick="toggleFormulario()">Toggle Formulario</button>
 
     <div class="cuadros">
         <h2>Asignar Grupo</h2>

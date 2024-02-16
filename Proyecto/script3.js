@@ -1,29 +1,33 @@
-function Alumno(nombre, apellidos) {
+function Alumno(nombre, apellidos, fechaNacimiento) {
     this.nombre = nombre;
     this.apellidos = apellidos;
+    this.fechaNacimiento = fechaNacimiento;  // Nuevo campo para la fecha de cumpleaños
     this.materias = [];
     this.calificaciones = {};
     this.grupo = "";
 }
+
 
 let alumnos = JSON.parse(localStorage.getItem('alumnos')) || [];
 
 function agregarAlumno() {
     let nombre = document.getElementById('nombre').value;
     let apellidos = document.getElementById('apellidos').value;
-
-    if (!nombre || !apellidos) {
+  //  let fechaNacimiento = prompt("Ingrese la fecha de cumpleaños del alumno (formato: YYYY-MM-DD):");
+    let fechaNacimiento =document.getElementById('fechaNacimiento').value;
+    if (!nombre || !apellidos || !fechaNacimiento) {
         alert("Por favor, complete todos los campos.");
         return;
     }
 
-    let alumno = new Alumno(nombre, apellidos);
+    let alumno = new Alumno(nombre, apellidos, fechaNacimiento);
     alumnos.push(alumno);
 
     localStorage.setItem('alumnos', JSON.stringify(alumnos));
 
     mostrarAlumnos();
 }
+
 
 function agregarMateriaCalificacion() {
     let materia = document.getElementById('materia').value;
@@ -34,22 +38,28 @@ function agregarMateriaCalificacion() {
         return;
     }
 
+    // Buscar el último alumno válido en el array alumnos
     let indiceUltimoAlumno = alumnos.length - 1;
+    while (indiceUltimoAlumno >= 0 && (!alumnos[indiceUltimoAlumno].nombre || !alumnos[indiceUltimoAlumno].apellidos)) {
+        indiceUltimoAlumno--;
+    }
 
     if (indiceUltimoAlumno >= 0) {
-        alumnos[indiceUltimoAlumno].materias.push(materia);
-        alumnos[indiceUltimoAlumno].calificaciones[materia] = calificacion;
-
-        localStorage.setItem('alumnos', JSON.stringify(alumnos));
-
-        mostrarAlumnos();
+        // Verificar si el alumno ya tiene la materia asignada
+        if (!alumnos[indiceUltimoAlumno].materias.includes(materia)) {
+            alumnos[indiceUltimoAlumno].materias.push(materia);
+            alumnos[indiceUltimoAlumno].calificaciones[materia] = calificacion;
+            mostrarAlumnos();
+        } else {
+            alert("La materia ya está asignada a este alumno.");
+        }
     } else {
         alert("Agregue un alumno primero antes de asignar materias y calificaciones.");
     }
 }
 
 function agregarGrupo() {
-    let grupo = document.getElementById('grupo').value.toUpperCase(); 
+    let grupo = document.getElementById('grupo').value.toUpperCase();
 
     if (!grupo || (grupo !== 'A' && grupo !== 'B')) {
         alert("Por favor, ingrese un grupo válido (A o B).");
@@ -88,26 +98,29 @@ function sortAlumnos() {
 }
 
 function mostrarAlumnos(alumnosMostrar = alumnos) {
-    sortAlumnos(); 
+    sortAlumnos();
     let alumnosList = document.getElementById('alumno-list');
-    alumnosList.innerHTML = ''; 
+    alumnosList.innerHTML = '';
 
     for (let i = 0; i < alumnosMostrar.length; i++) {
         let alumnoItem = document.createElement('li');
         alumnoItem.innerHTML = `
             <strong>${alumnosMostrar[i].nombre} ${alumnosMostrar[i].apellidos}</strong><br>
+            Fecha de Cumpleaños: ${alumnosMostrar[i].fechaNacimiento}<br> <!-- Nueva línea -->
             Materias y Calificaciones:<br>${generarListaMateriasCalificaciones(alumnosMostrar[i].materias.sort(), alumnosMostrar[i].calificaciones)}<br>
             Grupo: ${alumnosMostrar[i].grupo}<br>
             Promedio Total: ${obtenerPromedioTotalAlumno(alumnosMostrar[i])}
         `;
         alumnoItem.appendChild(crearBotonModificar(i));
-        alumnoItem.appendChild(crearBotonModificarMaterias(i)); 
-        alumnoItem.appendChild(crearBotonDarDeBaja(i)); 
+        alumnoItem.appendChild(crearBotonModificarMaterias(i));
+        alumnoItem.appendChild(crearBotonDarDeBaja(i));
+        alumnoItem.appendChild(crearBotonAgregarMateria(i));
         alumnosList.appendChild(alumnoItem);
     }
 
-    calcularPromedioPorGrupo(); // Actualizar el promedio de grupos
+    calcularPromedioPorGrupo();
 }
+
 
 function crearBotonModificar(indice) {
     let boton = document.createElement('button');
@@ -163,7 +176,7 @@ function agregarMateriaAlumnoExistente(indice) {
 
 function modificarMateriasAlumnoExistente(indice) {
     let opcion = prompt("Seleccione una opción:\n1. Agregar nueva materia\n2. Modificar materia existente");
-    
+
     if (opcion === "1") {
         agregarMateriaAlumnoExistente(indice);
     } else if (opcion === "2") {
@@ -171,7 +184,7 @@ function modificarMateriasAlumnoExistente(indice) {
         if (materiaExistente && alumnos[indice].materias.includes(materiaExistente)) {
             let nuevaMateria = prompt(`Ingrese el nuevo nombre para ${materiaExistente}:`);
             if (nuevaMateria) {
-                
+
                 let indexMateria = alumnos[indice].materias.indexOf(materiaExistente);
                 alumnos[indice].materias[indexMateria] = nuevaMateria;
                 alumnos[indice].calificaciones[nuevaMateria] = alumnos[indice].calificaciones[materiaExistente];
@@ -201,16 +214,7 @@ function generarListaMateriasCalificaciones(materias, calificaciones) {
     return listaMateriasCalificaciones;
 }
 
-function darDeBajaAlumno(indice) {
-    let confirmacion = confirm("¿Estás seguro de dar de baja a este alumno?");
-    if (confirmacion) {
-        alumnos.splice(indice, 1);
 
-        localStorage.setItem('alumnos', JSON.stringify(alumnos));
-
-        mostrarAlumnos();
-    }
-}
 
 function crearBotonDarDeBaja(indice) {
     let boton = document.createElement('button');
@@ -221,27 +225,41 @@ function crearBotonDarDeBaja(indice) {
     return boton;
 }
 
-function mostrarAlumnos(alumnosMostrar = alumnos) {
-    sortAlumnos(); 
-    let alumnosList = document.getElementById('alumno-list');
-    alumnosList.innerHTML = ''; 
-
-    for (let i = 0; i < alumnosMostrar.length; i++) {
-        let alumnoItem = document.createElement('li');
-        alumnoItem.innerHTML = `
-            <strong>${alumnosMostrar[i].nombre} ${alumnosMostrar[i].apellidos}</strong><br>
-            Materias y Calificaciones:<br>${generarListaMateriasCalificaciones(alumnosMostrar[i].materias.sort(), alumnosMostrar[i].calificaciones)}<br>
-            Grupo: ${alumnosMostrar[i].grupo}<br>
-            Promedio Total: ${obtenerPromedioTotalAlumno(alumnosMostrar[i])}
-        `;
-        alumnoItem.appendChild(crearBotonModificar(i));
-        alumnoItem.appendChild(crearBotonModificarMaterias(i)); 
-        alumnoItem.appendChild(crearBotonDarDeBaja(i)); 
-        alumnosList.appendChild(alumnoItem);
-    }
-
-    calcularPromedioPorGrupo(); // Actualizar el promedio de grupos
+function crearBotonAgregarMateria(indice) {
+    let boton = document.createElement('button');
+    boton.textContent = "Agregar Materia";
+    boton.onclick = function () {
+        agregarMateriaAlumno(indice);
+    };
+    return boton;
 }
+
+function agregarMateriaAlumno(indice) {
+    let materia = prompt("Ingrese el nombre de la materia:");
+    let calificacion = prompt(`Ingrese la calificación para ${materia}:`);
+
+    if (materia && calificacion && !isNaN(parseFloat(calificacion))) {
+        alumnos[indice].materias.push(materia);
+        alumnos[indice].calificaciones[materia] = calificacion;
+
+        localStorage.setItem('alumnos', JSON.stringify(alumnos));
+
+        mostrarAlumnos();
+    } else {
+        alert("Por favor, ingrese datos válidos.");
+    }
+}
+
+function crearBotonDarDeBaja(indice) {
+    let boton = document.createElement('button');
+    boton.textContent = "Dar de Baja";
+    boton.className = "boton-rojo"; 
+    boton.onclick = function () {
+        darDeBajaAlumno(indice);
+    };
+    return boton;
+}
+
 
 function cargarAlumnosDesdeLocalStorage() {
     const alumnosGuardados = localStorage.getItem('alumnos');
@@ -257,20 +275,10 @@ function guardarAlumnosEnLocalStorage() {
     localStorage.setItem('alumnos', JSON.stringify(alumnos));
 }
 
-function crearBotonDarDeBaja(indice) {
-    let boton = document.createElement('button');
-    boton.textContent = "Dar de Baja";
-    boton.className = "boton-dar-de-baja"; 
-    boton.onclick = function () {
-        darDeBajaAlumno(indice);
-    };
-    return boton;
-}
-
 function darDeBajaAlumno(indice) {
     let confirmarBaja = confirm("¿Está seguro de dar de baja a este alumno?");
     if (confirmarBaja) {
-       
+
         alumnos.splice(indice, 1);
         mostrarAlumnos();
         guardarAlumnosEnLocalStorage();
@@ -294,7 +302,7 @@ function filtrarAlumnos() {
 
 function calcularPromedioPorGrupo() {
     let grupos = {};
-    
+
     // Organizar a los alumnos por grupos
     for (let alumno of alumnos) {
         if (alumno.grupo) {
@@ -313,7 +321,7 @@ function calcularPromedioPorGrupo() {
     }
     promedioGruposHTML += '</ul>';
 
-    // Mostrar el promedio de grupos en la pantalla
+    
     document.getElementById('promedio-grupos').innerHTML = promedioGruposHTML;
 }
 
@@ -333,3 +341,5 @@ function calcularPromedioGrupo(alumnosGrupo) {
         return 0;
     }
 }
+
+

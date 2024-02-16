@@ -36,7 +36,8 @@ button {
     background-color: #4caf50;
     color: white;
     padding: 10px;
-    border: none;
+    border: solid 1px;
+    
     cursor: pointer;
 }
 
@@ -58,10 +59,16 @@ li:last-child {
     border-bottom: none;
 }
 
-    .boton-dar-de-baja {
-        background-color: red; 
-        color: white; 
-        float: right; 
-        margin-right: 10px; 
+
+    
+    /* Otros estilos ... */
+    
+    .boton-rojo {
+        color: #fff;
+        background-color: #d9534f;
+        border-color: #d43f3a;
+        float: right; /* Mueve el botón hacia la derecha */
     }
+
+
 
