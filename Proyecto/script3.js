@@ -13,20 +13,29 @@ let alumnos = JSON.parse(localStorage.getItem('alumnos')) || [];
 function agregarAlumno() {
     let nombre = document.getElementById('nombre').value;
     let apellidos = document.getElementById('apellidos').value;
-  
-    let fechaNacimiento =document.getElementById('fechaNacimiento').value;
+    let fechaNacimiento = document.getElementById('fechaNacimiento').value;
+
     if (!nombre || !apellidos || !fechaNacimiento) {
         alert("Por favor, complete todos los campos.");
         return;
     }
 
+    let grupo = prompt('Ingrese el grupo (A o B):').toUpperCase();
+
+    if (!grupo || (grupo !== 'A' && grupo !== 'B')) {
+        alert('Por favor, ingrese un grupo válido (A o B).');
+        return;
+    }
+
     let alumno = new Alumno(nombre, apellidos, fechaNacimiento);
+    alumno.grupo = grupo;  // Asigna el grupo directamente al crear el alumno
     alumnos.push(alumno);
 
     localStorage.setItem('alumnos', JSON.stringify(alumnos));
 
     mostrarAlumnos();
 }
+
 
 
 function agregarMateriaCalificacion() {
@@ -58,26 +67,7 @@ function agregarMateriaCalificacion() {
     }
 }
 
-function agregarGrupo() {
-    let grupo = document.getElementById('grupo').value.toUpperCase();
 
-    if (!grupo || (grupo !== 'A' && grupo !== 'B')) {
-        alert("Por favor, ingrese un grupo válido (A o B).");
-        return;
-    }
-
-    let indiceUltimoAlumno = alumnos.length - 1;
-
-    if (indiceUltimoAlumno >= 0) {
-        alumnos[indiceUltimoAlumno].grupo = grupo;
-
-        localStorage.setItem('alumnos', JSON.stringify(alumnos));
-
-        mostrarAlumnos();
-    } else {
-        alert("Agregue un alumno primero antes de asignar un grupo.");
-    }
-}
 
 function obtenerPromedioTotalAlumno(alumno) {
     let calificaciones = Object.values(alumno.calificaciones);
